@@ -1,7 +1,9 @@
 # agent/reasoner.py
-import openai
+from openai import OpenAI
 
-def generate_answer(query, top_docs, model="gpt-4"):
+client = OpenAI()
+
+def generate_answer(query, top_docs, model="gpt-4o"):
     context = "\n\n".join([f"Document {i+1}:\n{doc}" for i, doc in enumerate(top_docs)])
 
     prompt = f"""You are a pediatric emergency medicine research assistant. 
@@ -15,12 +17,12 @@ Documents:
 
 Answer:"""
 
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model=model,
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2,
         max_tokens=512,
     )
 
-    return response["choices"][0]["message"]["content"]
+    return response.choices[0].message.content
 
