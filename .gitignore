@@ -7,3 +7,10 @@ __pycache__/
 research_agent_env/
 *.log
 
+# Ignore FAISS and pickled index files
+*.faiss
+*.pkl
+
+# (Optional) Ignore Mac-specific metadata
+.DS_Store
+
