@@ -24,9 +24,11 @@ if __name__ == "__main__":
         if query.strip().lower() == "exit":
             break
 
+        #encode the query and search the FAISS index for the top-k relevant documents
         query_embedding = model.encode(query)
         idxs, _ = search_index(index, query_embedding, k=5)
 
+        #access the text content associated with the top-k embeddings and feed it to the language model along with the query
         top_docs = [corpus[i] for i in idxs]
         answer = generate_answer(query, top_docs)
 
